@@ -4,6 +4,9 @@
 #define BAUD_RATE 9600
 #define INPUT_PIN A0
 #define LED_PIN 13
+#define R_LED 9
+#define G_LED 10
+#define B_LED 11
 #define BUFFER_SIZE 8
 
 //#define TEST_MODE                            // comment out to read analog pin, uncomment for test ramp wave
@@ -19,7 +22,9 @@ void setup()
 {
   Serial.begin(BAUD_RATE);
   pinMode(LED_PIN, OUTPUT);
-  
+  pinMode(R_LED, OUTPUT);
+  pinMode(G_LED, OUTPUT);
+  pinMode(B_LED, OUTPUT);
 }
 
 void loop() {
@@ -31,9 +36,16 @@ void loop() {
     {
       case 'I': // start timer
           startTimer1();
+          digitalWrite(R_LED, HIGH);
+          digitalWrite(G_LED, LOW);
+          digitalWrite(B_LED, LOW);
           break;
       case 'O': // stop timer
+          digitalWrite(R_LED, LOW);
+          digitalWrite(G_LED, LOW);
+          digitalWrite(B_LED, HIGH);
           TCCR1B &= ~(_BV(CS10) | _BV(CS11) | _BV(CS12));          // clears all clock selects bits
+
           break;
       default:
           break;
